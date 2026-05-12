@@ -13,3 +13,7 @@ Cara running:
 - Pada terminal keempat, jalankan client ketiga dengan perintah `cargo run --bin client`
 - Kemudian pada salah satu terminal client, ketik pesan dan tekan enter, maka semua client lainnya akan menerima pesan tersebut secara bersamaan. <br>
 
+## Experiment 2.2
+Eksperimen ini hanya mengganti port yang awalnya ada di port 2020 menjadi port 8080, perubahan code hanya ada di TCPListener pada server dan ClientBuilder pada client dengan menyesuaikan port 8080. <br>
+
+Apakah file lain dari modul yaitu server.rs menggunakan ws protokol juga? ya, file server.rs menggunakan TCPListener untuk menerima koneksi dari client, lalu koneksi TCP tersebut dibungkus menjadi protokol ws (dapat dilihat di line 51, server.rs).
