@@ -19,16 +19,16 @@ async fn handle_connection(
             // Dengarkan pesan masuk dari klien ini.
             Some(msg_result) = ws_stream.next() => {
                 let msg = msg_result?;
-                println!("Received message from {addr:?}: {msg:?}");
                 
-                let _ = bcast_tx.send(format!("Message from {addr:?}: {msg:?}"));
+                if let Some(text) = msg.as_text() {
+                    println!("Received message from {addr}: {text}");
+                    
+                    let _ = bcast_tx.send(format!("From {addr}: {text}"));
+                }
             }
 
             // Dengarkan pesan broadcast dari klien lain, lalu kirim ke klien ini.
             Ok(msg) = bcast_rx.recv() => {
-                println!("Broadcasting message to {addr:?}: {msg:?}");
-                
-                // Catatan: Pastikan Message::text atau Message::Text sesuai dengan versi tokio-websockets mu.
                 ws_stream.send(Message::text(msg)).await?; 
             }
         }

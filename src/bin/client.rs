@@ -13,7 +13,7 @@ async fn main() -> Result<(), tokio_websockets::Error> {
 
     let stdin = tokio::io::stdin();
     let mut stdin = BufReader::new(stdin).lines();
-
+    println!("Muhathir's Computer - From server: Welcome to chat! Type your messages below:");
 
     // TODO: For a hint, see the description of the task below.
 loop {
@@ -44,7 +44,9 @@ loop {
                 match msg_result {
                     Some(Ok(msg)) => {
                         // Tampilkan pesan broadcast yang diterima
-                        println!("Received broadcast: {msg:?}");
+                        if let Some(text) = msg.as_text() {
+                            println!("Muhathir's Computer - From server: {text}");
+                        }
                     }
                     Some(Err(e)) => {
                         eprintln!("Error receiving from WebSocket: {e}");
